@@ -1,0 +1,81 @@
+
+install docker
+--------------
+https://docs.docker.com/engine/install/ubuntu/ (contoh saya pake ubuntu server)
+--------------
+docker --version
+
+docker pull phpmyadmin:5.1.1
+docker pull mariadb:10.5.12
+docker images
+
+mkdir -p /home/docker_rnd/pma_5.1.1_mdb_10.5.12
+chmod 777 -Rv /home/docker_rnd/pma_5.1.1_mdb_10.5.12 &&
+cd /home/docker_rnd/pma_5.1.1_mdb_10.5.12
+
+-----------install docker compose
+https://docs.docker.com/compose/install/ (contoh saya pake ubuntu server)
+-----------
+docker-compose --version
+
+
+nano docker-compose.yml
+--------------- docker-compose.yml
+version: '3.1'
+
+services:
+  db:
+    image: mariadb:10.5.12
+    restart: always
+    ports:
+      - 3400:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: masuk123
+
+  phpmyadmin:
+    image: phpmyadmin:5.1.1
+    restart: always
+    ports:
+      - 8888:80
+--------------- ------------------
+ctrl+c y
+
+https://docs.docker.com/compose/install/
+
+docker-compose up -d // -d = daemon (on background), start service + build all data
+docker-compose stop // stop service
+docker-compose start // start service without build
+docker-compose restart // restart service
+docker-compose down // stop service + delete all data
+
+phpmyadmin http://<server_host>:8888/  (example : http://192.168.100.9:8888/)
+maridb http://<server_host>:3400/ (example : http://192.168.100.9:3400/)
+login : root
+password : masuk123
+
+
+---------environtment & documentation
+https://hub.docker.com/_/phpmyadmin
+---------environtment
+
+//===========old--ver
+version: '3.1'
+
+services:
+  db:
+    image: mariadb:10.3
+    restart: always
+    ports:
+      - 3400:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: masuk123
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8888:80
+    environment:
+      - PMA_ARBITRARY=1
+//===========old--ver
+
